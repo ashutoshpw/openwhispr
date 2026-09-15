@@ -41,6 +41,7 @@ export interface TranscriptionSettings {
   snippets: Snippet[];
   assemblyAiStreaming: boolean;
   showTranscriptionPreview: boolean;
+  fuzzyDictionaryCorrection: boolean;
 }
 
 export interface CleanupSettings {
@@ -407,6 +408,8 @@ function useSettingsInternal() {
     setAutoLearnCorrections,
     showTranscriptionPreview: store.showTranscriptionPreview,
     setShowTranscriptionPreview: store.setShowTranscriptionPreview,
+    fuzzyDictionaryCorrection: store.fuzzyDictionaryCorrection,
+    setFuzzyDictionaryCorrection: store.setFuzzyDictionaryCorrection,
     autoPasteEnabled: store.autoPasteEnabled,
     setAutoPasteEnabled: store.setAutoPasteEnabled,
     keepTranscriptionInClipboard: store.keepTranscriptionInClipboard,

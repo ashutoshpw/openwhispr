@@ -1845,6 +1845,8 @@
       "pressEnterToAdd": "Enterキーで追加",
       "autoLearnTitle": "修正から自動学習",
       "autoLearnDescription": "対象アプリで文字起こしを修正すると、修正された単語が自動的に辞書に追加されます。",
+      "fuzzyCorrectionTitle": "辞書の単語を自動修正",
+      "fuzzyCorrectionDescription": "文字起こしが辞書の単語にほぼ一致する場合、貼り付け前に辞書の表記に修正されます。",
       "yourWords": "あなたの単語",
       "clearDictionaryTitle": "辞書をクリアしますか？",
       "clearDictionaryDescription": "カスタム辞書からすべての単語が削除されます。この操作は元に戻せません。",

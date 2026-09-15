@@ -294,6 +294,7 @@ const BOOLEAN_SETTINGS = new Set([
   "saveDiscardedTranscriptions",
   "noteFilesEnabled",
   "showTranscriptionPreview",
+  "fuzzyDictionaryCorrection",
   "cleanupDisableThinking",
   "dictationAgentDisableThinking",
   "dictationAgentVisionDisableThinking",
@@ -886,6 +887,7 @@ export interface SettingsState
   whisperVadSamplesOverlap: number;
   panelStartPosition: "bottom-right" | "center" | "bottom-left";
   showTranscriptionPreview: boolean;
+  fuzzyDictionaryCorrection: boolean;
   autoPasteEnabled: boolean;
   keepTranscriptionInClipboard: boolean;
   noteFilesEnabled: boolean;
@@ -1195,6 +1197,7 @@ export interface SettingsState
   setWhisperVadSamplesOverlap: (value: number) => void;
   setPanelStartPosition: (position: "bottom-right" | "center" | "bottom-left") => void;
   setShowTranscriptionPreview: (value: boolean) => void;
+  setFuzzyDictionaryCorrection: (value: boolean) => void;
   setAutoPasteEnabled: (value: boolean) => void;
   setKeepTranscriptionInClipboard: (value: boolean) => void;
   setNoteFilesEnabled: (value: boolean) => void;
@@ -1660,6 +1663,7 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
     return "bottom-right" as const;
   })(),
   showTranscriptionPreview: readBoolean("showTranscriptionPreview", false),
+  fuzzyDictionaryCorrection: readBoolean("fuzzyDictionaryCorrection", true),
   autoPasteEnabled: readBoolean("autoPasteEnabled", true),
   keepTranscriptionInClipboard: readBoolean("keepTranscriptionInClipboard", false),
   noteFilesEnabled: readBoolean("noteFilesEnabled", false),
@@ -2499,6 +2503,7 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
   },
 
   setShowTranscriptionPreview: createBooleanSetter("showTranscriptionPreview"),
+  setFuzzyDictionaryCorrection: createBooleanSetter("fuzzyDictionaryCorrection"),
   setAutoPasteEnabled: createBooleanSetter("autoPasteEnabled"),
   setKeepTranscriptionInClipboard: createBooleanSetter("keepTranscriptionInClipboard"),
   setNoteFilesEnabled: createBooleanSetter("noteFilesEnabled"),
@@ -2554,6 +2559,8 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
       s.setAssemblyAiStreaming(settings.assemblyAiStreaming);
     if (settings.showTranscriptionPreview !== undefined)
       s.setShowTranscriptionPreview(settings.showTranscriptionPreview);
+    if (settings.fuzzyDictionaryCorrection !== undefined)
+      s.setFuzzyDictionaryCorrection(settings.fuzzyDictionaryCorrection);
   },
 
   // Apply a transcription config to dictation, then mirror its cloud routing to

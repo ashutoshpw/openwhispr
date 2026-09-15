@@ -1898,6 +1898,8 @@
       "pressEnterToAdd": "Pulsa Enter para añadir",
       "autoLearnTitle": "Aprender automáticamente de las correcciones",
       "autoLearnDescription": "Cuando corriges una transcripción en la aplicación de destino, la palabra corregida se añade automáticamente a tu diccionario.",
+      "fuzzyCorrectionTitle": "Corregir palabras del diccionario automáticamente",
+      "fuzzyCorrectionDescription": "Cuando una transcripción casi coincide con una palabra del diccionario, se corrige a la ortografía del diccionario antes de pegar.",
       "yourWords": "Tus palabras",
       "clearDictionaryTitle": "¿Borrar diccionario?",
       "clearDictionaryDescription": "Esto eliminará todas las palabras de tu diccionario personalizado. Esta acción no se puede deshacer.",

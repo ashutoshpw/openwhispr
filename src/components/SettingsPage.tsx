@@ -1219,6 +1219,8 @@ export default function SettingsPage({
     setMeetingHotkeyLayoutMode,
     autoLearnCorrections,
     setAutoLearnCorrections,
+    fuzzyDictionaryCorrection,
+    setFuzzyDictionaryCorrection,
     updateTranscriptionSettings,
     updateCleanupSettings,
     cloudTranscriptionMode,
@@ -3457,6 +3459,22 @@ export default function SettingsPage({
                     })}
                   >
                     <Toggle checked={autoLearnCorrections} onChange={setAutoLearnCorrections} />
+                  </SettingsRow>
+                </SettingsPanelRow>
+                <SettingsPanelRow>
+                  <SettingsRow
+                    label={t("settingsPage.dictionary.fuzzyCorrectionTitle", {
+                      defaultValue: "Fix dictionary words automatically",
+                    })}
+                    description={t("settingsPage.dictionary.fuzzyCorrectionDescription", {
+                      defaultValue:
+                        "When a transcript nearly matches a dictionary word, it is corrected to the dictionary spelling before pasting.",
+                    })}
+                  >
+                    <Toggle
+                      checked={fuzzyDictionaryCorrection}
+                      onChange={setFuzzyDictionaryCorrection}
+                    />
                   </SettingsRow>
                 </SettingsPanelRow>
               </SettingsPanel>
