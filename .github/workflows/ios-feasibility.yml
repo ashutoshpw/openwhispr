@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if rg -n '(AVAudio|AVCapture|requestRecordPermission|AudioUnit|kAudio)' \
+          if grep -REn '(AVAudio|AVCapture|requestRecordPermission|AudioUnit|kAudio)' \
             "$IOS_PROJECT_DIR/Sources/KeyboardExtension"; then
             echo "The keyboard extension must not capture microphone audio." >&2
             exit 1
@@ -72,7 +72,7 @@ jobs:
         run: |
           set -euo pipefail
           cd "$IOS_PROJECT_DIR"
-          "$RUNNER_TEMP/xcodegen/bin/xcodegen" generate --spec project.yml
+          "$RUNNER_TEMP/xcodegen/xcodegen/bin/xcodegen" generate --spec project.yml
           test -d OpenWhisprIOSFeasibility.xcodeproj
           xcodebuild -list -project OpenWhisprIOSFeasibility.xcodeproj
 

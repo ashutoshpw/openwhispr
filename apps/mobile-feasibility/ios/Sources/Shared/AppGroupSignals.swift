@@ -7,7 +7,7 @@ public final class AppGroupSignalObserver {
     private let queue: OperationQueue
     private let handler: () -> Void
     private let center = CFNotificationCenterGetDarwinNotifyCenter()
-    private let name = AppGroupConstants.signalName as CFString
+    private let name = CFNotificationName(rawValue: AppGroupConstants.signalName as CFString)
 
     public init(queue: OperationQueue = .main, handler: @escaping () -> Void) {
         self.queue = queue
@@ -35,7 +35,7 @@ public final class AppGroupSignalObserver {
     }
 
     public static func post() {
-        let name = AppGroupConstants.signalName as CFString
+        let name = CFNotificationName(rawValue: AppGroupConstants.signalName as CFString)
         CFNotificationCenterPostNotification(
             CFNotificationCenterGetDarwinNotifyCenter(),
             name,
