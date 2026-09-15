@@ -13,7 +13,7 @@
 - [x] **2026-09-15 — Phase 0 discovery:** verified repository instructions, Node/npm tooling, remotes, fork permissions, upstream rules, and the existing CI gates.
 - [x] **2026-09-15 — PR1 plan:** staged the documentation-only delivery and the gated Android/iOS sequence.
 - [ ] **Android feasibility:** not passed; no physical-device evidence has been accepted yet.
-- [ ] **iOS feasibility:** not passed; direct keyboard-extension microphone access remains restricted and the companion-session prototype is pending.
+- [ ] **iOS feasibility:** source prototype, workflow, and static checks are implemented; compiler, physical-device, and policy evidence remain pending.
 - [ ] **Shared core, mobile foundation, native transport, and product implementation:** pending their stated feasibility gates and predecessor PRs.
 
 ## Frozen product answers

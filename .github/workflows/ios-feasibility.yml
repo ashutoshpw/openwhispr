@@ -1,0 +1,94 @@
+name: iOS Feasibility
+
+on:
+  pull_request:
+    paths:
+      - "apps/mobile-feasibility/ios/**"
+      - ".github/workflows/ios-feasibility.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  IOS_PROJECT_DIR: apps/mobile-feasibility/ios
+  XCODEGEN_VERSION: "2.46.0"
+  XCODEGEN_SHA256: "4d9e34b62172d645eed6457cac13fc222569974098ef4ee9c3368bedf0196806"
+
+jobs:
+  core-tests:
+    name: Foundation reducer tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run pure Foundation tests
+        run: swift test --package-path "$IOS_PROJECT_DIR"
+
+  compile:
+    name: Unsigned iPhoneOS compile
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select pinned Xcode
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcode_app=/Applications/Xcode_16.4.app
+          test -d "$xcode_app" || {
+            echo "Expected pinned Xcode at $xcode_app; hosted image changed." >&2
+            exit 1
+          }
+          sudo xcode-select --switch "$xcode_app"
+          xcodebuild -version
+
+      - name: Install pinned XcodeGen
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/xcodegen.zip"
+          extract="$RUNNER_TEMP/xcodegen"
+          curl --fail --location --silent --show-error --retry 3 \
+            --output "$archive" \
+            "https://github.com/yonaskolb/XcodeGen/releases/download/${XCODEGEN_VERSION}/xcodegen.zip"
+          printf '%s  %s\n' "$XCODEGEN_SHA256" "$archive" | shasum --algorithm 256 --check
+          ditto -x -k "$archive" "$extract"
+          xcodegen_bin="$extract/xcodegen/bin/xcodegen"
+          test -x "$xcodegen_bin"
+          "$xcodegen_bin" --version
+          echo "XCODEGEN_BIN=$xcodegen_bin" >> "$GITHUB_ENV"
+
+      - name: Verify keyboard has no microphone implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -REn '(AVAudio|AVCapture|requestRecordPermission|AudioUnit|kAudio)' \
+            "$IOS_PROJECT_DIR/Sources/KeyboardExtension"; then
+            echo "The keyboard extension must not capture microphone audio." >&2
+            exit 1
+          fi
+
+      - name: Generate Xcode project from spec
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$IOS_PROJECT_DIR"
+          "$XCODEGEN_BIN" generate --spec project.yml
+          test -d OpenWhisprIOSFeasibility.xcodeproj
+          xcodebuild -list -project OpenWhisprIOSFeasibility.xcodeproj
+
+      - name: Compile app and keyboard against iPhoneOS SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$IOS_PROJECT_DIR"
+          xcodebuild \
+            -project OpenWhisprIOSFeasibility.xcodeproj \
+            -scheme OpenWhisprFeasibility \
+            -sdk iphoneos \
+            -configuration Debug \
+            -derivedDataPath "$RUNNER_TEMP/openwhispr-ios-derived-data" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build

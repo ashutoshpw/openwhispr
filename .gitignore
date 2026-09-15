@@ -178,6 +178,9 @@ tmp/
 temp/
 
 # Electron specific
+/apps/mobile-feasibility/ios/OpenWhisprIOSFeasibility.xcodeproj
+/apps/mobile-feasibility/ios/.build/
+/apps/mobile-feasibility/ios/xcuserdata/
 out/
 dist/
 build/

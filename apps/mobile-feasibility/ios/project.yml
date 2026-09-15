@@ -1,0 +1,54 @@
+name: OpenWhisprIOSFeasibility
+
+options:
+  bundleIdPrefix: com.openwhispr
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+
+targets:
+  OpenWhisprFeasibility:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/Shared
+      - path: Sources/HostApp
+    info:
+      path: Config/Host-Info.plist
+    entitlements:
+      path: Config/Host.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.openwhispr.ios.feasibility
+        PRODUCT_NAME: OpenWhispr Feasibility
+    dependencies:
+      - target: OpenWhisprKeyboard
+
+  OpenWhisprKeyboard:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Sources/Shared
+      - path: Sources/KeyboardExtension
+    info:
+      path: Config/Keyboard-Info.plist
+    entitlements:
+      path: Config/Keyboard.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.openwhispr.ios.feasibility.keyboard
+        PRODUCT_NAME: OpenWhispr Feasibility Keyboard
+        APPLICATION_EXTENSION_API_ONLY: YES
+
+schemes:
+  OpenWhisprFeasibility:
+    build:
+      targets:
+        OpenWhisprFeasibility: all
+        OpenWhisprKeyboard: all
