@@ -54,8 +54,10 @@ jobs:
             "https://github.com/yonaskolb/XcodeGen/releases/download/${XCODEGEN_VERSION}/xcodegen.zip"
           printf '%s  %s\n' "$XCODEGEN_SHA256" "$archive" | shasum --algorithm 256 --check
           ditto -x -k "$archive" "$extract"
-          test -x "$extract/xcodegen/bin/xcodegen"
-          "$extract/xcodegen/bin/xcodegen" --version
+          xcodegen_bin="$extract/xcodegen/bin/xcodegen"
+          test -x "$xcodegen_bin"
+          "$xcodegen_bin" --version
+          echo "XCODEGEN_BIN=$xcodegen_bin" >> "$GITHUB_ENV"
 
       - name: Verify keyboard has no microphone implementation
         shell: bash
@@ -72,7 +74,7 @@ jobs:
         run: |
           set -euo pipefail
           cd "$IOS_PROJECT_DIR"
-          "$RUNNER_TEMP/xcodegen/xcodegen/bin/xcodegen" generate --spec project.yml
+          "$XCODEGEN_BIN" generate --spec project.yml
           test -d OpenWhisprIOSFeasibility.xcodeproj
           xcodebuild -list -project OpenWhisprIOSFeasibility.xcodeproj
 

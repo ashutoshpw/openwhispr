@@ -7,7 +7,7 @@ public final class AppGroupSignalObserver {
     private let queue: OperationQueue
     private let handler: () -> Void
     private let center = CFNotificationCenterGetDarwinNotifyCenter()
-    private let name = CFNotificationName(rawValue: AppGroupConstants.signalName as CFString)
+    private let name = AppGroupConstants.signalName as CFString
 
     public init(queue: OperationQueue = .main, handler: @escaping () -> Void) {
         self.queue = queue
@@ -31,7 +31,12 @@ public final class AppGroupSignalObserver {
 
     deinit {
         let observer = Unmanaged.passUnretained(self).toOpaque()
-        CFNotificationCenterRemoveObserver(center, observer, name, nil)
+        CFNotificationCenterRemoveObserver(
+            center,
+            observer,
+            CFNotificationName(rawValue: name),
+            nil
+        )
     }
 
     public static func post() {
