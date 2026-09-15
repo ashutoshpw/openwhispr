@@ -160,6 +160,10 @@ final class SessionReducerTests: XCTestCase {
             .capReached(dictationID: dictationID, at: start.addingTimeInterval(120))
         )
         XCTAssertEqual(state.phase, .transcribing)
+        state = SessionReducer.reduce(
+            state,
+            .heartbeat(sessionID: sessionID, at: start.addingTimeInterval(121))
+        )
 
         state = SessionReducer.reduce(
             state,
@@ -272,10 +276,14 @@ final class SessionReducerTests: XCTestCase {
                 at: start.addingTimeInterval(6)
             )
         )
+        let responsiveState = SessionReducer.reduce(
+            state,
+            .heartbeat(sessionID: sessionID, at: start.addingTimeInterval(7))
+        )
         if case .alreadyInserted(_) = InsertionFenceReducer.claim(
             existing: inserted,
             result: result,
-            state: state,
+            state: responsiveState,
             at: start.addingTimeInterval(7),
             claimNonce: "claim-3"
         ) {
