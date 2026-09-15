@@ -1845,6 +1845,8 @@
       "pressEnterToAdd": "Premi Invio per aggiungere",
       "autoLearnTitle": "Apprendimento automatico dalle correzioni",
       "autoLearnDescription": "Quando correggi una trascrizione nell'app di destinazione, la parola corretta viene aggiunta automaticamente al tuo dizionario.",
+      "fuzzyCorrectionTitle": "Correggi automaticamente le parole del dizionario",
+      "fuzzyCorrectionDescription": "Quando una trascrizione è quasi identica a una parola del dizionario, viene corretta con l'ortografia del dizionario prima di incollare.",
       "yourWords": "Le tue parole",
       "clearDictionaryTitle": "Svuotare il dizionario?",
       "clearDictionaryDescription": "Verranno rimosse tutte le parole dal tuo dizionario personalizzato. Questa azione non può essere annullata.",

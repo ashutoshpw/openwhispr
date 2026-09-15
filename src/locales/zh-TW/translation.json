@@ -1845,6 +1845,8 @@
       "pressEnterToAdd": "按 Enter 新增",
       "autoLearnTitle": "從校正中自動學習",
       "autoLearnDescription": "當你在目標應用程式中校正轉錄時，校正後的字詞會自動新增到你的詞典中。",
+      "fuzzyCorrectionTitle": "自動修正詞典條目",
+      "fuzzyCorrectionDescription": "當轉錄結果接近詞典中的條目時，會在貼上前自動修正為詞典寫法。",
       "yourWords": "你的字詞",
       "clearDictionaryTitle": "清除詞典？",
       "clearDictionaryDescription": "這將移除自訂詞典中的所有字詞。此操作無法復原。",

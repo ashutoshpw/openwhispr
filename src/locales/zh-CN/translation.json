@@ -1845,6 +1845,8 @@
       "pressEnterToAdd": "按 Enter 添加",
       "autoLearnTitle": "从纠正中自动学习",
       "autoLearnDescription": "当你在目标应用中纠正转录时，纠正后的词语会自动添加到你的词典中。",
+      "fuzzyCorrectionTitle": "自动修正词典词条",
+      "fuzzyCorrectionDescription": "当转录结果接近词典中的词条时，会在粘贴前自动修正为词典写法。",
       "yourWords": "你的词语",
       "clearDictionaryTitle": "清除词典？",
       "clearDictionaryDescription": "这将删除自定义词典中的所有词语。此操作无法撤消。",

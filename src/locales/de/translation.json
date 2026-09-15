@@ -2138,6 +2138,8 @@
       "pressEnterToAdd": "Enter drücken zum Hinzufügen",
       "autoLearnTitle": "Automatisch aus Korrekturen lernen",
       "autoLearnDescription": "Wenn Sie eine Transkription in der Ziel-App korrigieren, wird das korrigierte Wort automatisch Ihrem Wörterbuch hinzugefügt.",
+      "fuzzyCorrectionTitle": "Wörterbuch automatisch korrigieren",
+      "fuzzyCorrectionDescription": "Wenn eine Transkription fast einem Wörterbucheintrag entspricht, wird sie vor dem Einfügen an die Schreibweise im Wörterbuch angepasst.",
       "yourWords": "Ihre Wörter",
       "clearDictionaryTitle": "Wörterbuch löschen?",
       "clearDictionaryDescription": "Dadurch werden alle Wörter aus Ihrem benutzerdefinierten Wörterbuch entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",

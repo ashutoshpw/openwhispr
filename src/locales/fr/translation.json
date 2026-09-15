@@ -2138,6 +2138,8 @@
       "pressEnterToAdd": "Appuyez sur Entrée pour ajouter",
       "autoLearnTitle": "Apprentissage automatique à partir des corrections",
       "autoLearnDescription": "Lorsque vous corrigez une transcription dans l'application cible, le mot corrigé est automatiquement ajouté à votre dictionnaire.",
+      "fuzzyCorrectionTitle": "Corriger automatiquement les mots du dictionnaire",
+      "fuzzyCorrectionDescription": "Lorsqu'une transcription est proche d'un mot du dictionnaire, elle est corrigée selon l'orthographe du dictionnaire avant le collage.",
       "yourWords": "Vos mots",
       "clearDictionaryTitle": "Effacer le dictionnaire ?",
       "clearDictionaryDescription": "Cela supprimera tous les mots de votre dictionnaire personnalisé. Cette action est irréversible.",

@@ -5,6 +5,7 @@ import logger from "../utils/logger";
 import { playStartCue, playStopCue } from "../utils/dictationCues";
 import { getSettings } from "../stores/settingsStore";
 import { expandSnippets } from "../utils/snippets";
+import { correctDictionaryMatches } from "../utils/dictionaryCorrector";
 import { getRecordingErrorTitle, getRecordingErrorDescription } from "../utils/recordingErrors";
 import { isAccessibilitySkipped } from "../utils/permissions";
 import { needsSttConfigBeforeStart } from "../helpers/sttConfigPolicy";
@@ -35,6 +36,30 @@ const SELECTION_EDIT_DETAIL_KEY_BY_CODE = {
   paste_failed: "pasteFailed",
 };
 const COMPANION_AUDIO_LEVEL_INTERVAL_MS = 80;
+
+// Rewrites the transcript toward the custom dictionary (detokenized entries
+// like "origin/main" spoken as "origin main", and near-miss words within one
+// edit of an entry). Runs before snippet expansion so expansions see the
+// corrected text; snippet triggers are excluded so they still match.
+function applyDictionaryCorrections(text, settings) {
+  const { fuzzyDictionaryCorrection, customDictionary, snippets } = settings;
+  if (
+    !fuzzyDictionaryCorrection ||
+    !Array.isArray(customDictionary) ||
+    customDictionary.length === 0
+  ) {
+    return text;
+  }
+  const { text: corrected, corrections } = correctDictionaryMatches(text, customDictionary, {
+    skipWords: (Array.isArray(snippets) ? snippets : [])
+      .map((snippet) => snippet?.trigger)
+      .filter(Boolean),
+  });
+  if (corrections.length > 0) {
+    logger.debug("Applied dictionary corrections to transcript", { corrections });
+  }
+  return corrected;
+}
 
 export const useAudioRecording = (toast, options = {}) => {
   const { t } = useTranslation();
@@ -495,11 +520,14 @@ export const useAudioRecording = (toast, options = {}) => {
             return;
           }
 
-          // A selection edit must replace the model's exact result. Snippet
-          // expansion is a dictation convenience and can otherwise mutate a
-          // legitimate replacement that happens to contain a snippet trigger.
+          // A selection edit must replace the model's exact result. Dictionary
+          // correction and snippet expansion are dictation conveniences and can
+          // otherwise mutate a legitimate replacement that happens to contain a
+          // dictionary word or snippet trigger.
           if (!result.selectionEdit?.sessionId) {
-            result.text = expandSnippets(result.text, getSettings().snippets);
+            const settings = getSettings();
+            result.text = applyDictionaryCorrections(result.text, settings);
+            result.text = expandSnippets(result.text, settings.snippets);
           }
 
           setTranscript(result.text);
@@ -508,7 +536,10 @@ export const useAudioRecording = (toast, options = {}) => {
             const { screenContext, transcript, selectedContext, deliverySessionId } =
               result.assistantConversation;
             const command = {
-              text: expandSnippets(transcript, getSettings().snippets),
+              text: expandSnippets(
+                applyDictionaryCorrections(transcript, getSettings()),
+                getSettings().snippets
+              ),
               attachment: screenContext
                 ? { image: screenContext.data, mediaType: screenContext.mediaType }
                 : null,

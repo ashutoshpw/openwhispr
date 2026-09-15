@@ -2138,6 +2138,8 @@
       "pressEnterToAdd": "Press Enter to add",
       "autoLearnTitle": "Auto-learn from corrections",
       "autoLearnDescription": "When you correct a transcription in the target app, the corrected word is automatically added to your dictionary.",
+      "fuzzyCorrectionTitle": "Fix dictionary words automatically",
+      "fuzzyCorrectionDescription": "When a transcript nearly matches a dictionary word, it is corrected to the dictionary spelling before pasting.",
       "yourWords": "Your words",
       "clearDictionaryTitle": "Clear dictionary?",
       "clearDictionaryDescription": "This will remove all words from your custom dictionary. This action cannot be undone.",
