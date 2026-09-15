@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.OpenWhisprFeasibility" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">@color/openwhispr_blue</item>
+        <item name="android:navigationBarColor">@color/openwhispr_surface</item>
+        <item name="android:statusBarColor">@color/openwhispr_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
